@@ -1,6 +1,6 @@
 # javascript-development-environment
 
-Javascript Development Environment
+JavaScript Development Environment
 
 # Starter Kit
 
@@ -17,6 +17,7 @@ Your Starter Kit should consist of the following elements:
 * []()
 
 # 1. Editors and configuration
+
 Choose an Editor.
 
 ### What to look for:
@@ -49,3 +50,32 @@ You can adjust or add [any rule](http://docs.editorconfig.org/en/master/editorco
 
 PS: Some of the listed editors above require [plugin](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig) to support `EditorConfig`, E.g. VSCode.
 
+# 2. Package Management
+
+We wil ultimately go with NPM, but its not the only package manager we have in the wide javaScript land, have a variety of package managers to choose from.
+
+### Package Managers
+
+[npm](npmjs.com) is my recommendation for you without hesitation, but there are certainly other interesting players out there.
+
+* [Bower](npmjs.com)
+* [JSPM](https://jspm.io/)
+* [Jam](http://www.jamjs.org/)
+* [Volo](http://volojs.org/)
+
+Next you have to install [Node](https://nodejs.org) & [npm](npmjs.com) and also create [package.json](package.json) file the bag of references to all the pckages we're going to use.
+
+### Package Security
+
+Packages can be published on npm by anyone, so that might make you a little bit paraniod!
+[Node security platform](https://nodesecurity.io/) offers a simply command line interface that you can automate checking for security vulnerabilities automatically. All you do is call nsp check as part of your build and then it reports the number of vulnerabilities found if any.
+
+how to install & run:
+
+`npm install -g nsp`
+
+`cd your-awesome-app`
+
+`nsp check`
+
+You might want to consider adding `nsp check` in your start script whithin your [package.json](package.json)

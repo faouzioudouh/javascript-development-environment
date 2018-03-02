@@ -1,0 +1,48 @@
+{
+  "name": "javascript-development-environment",
+  "version": "1.0.0",
+  "description": "JavaScript development environment",
+  "author": "Faouzi Oudouh",
+  "license": "MIT",
+  "scripts": {
+    "start": "npm-run-all --parallel security-check",
+    "security-check": "nsp check"
+  },
+  "dependencies": {
+    "whatwg-fetch": "^2.0.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "babel-register": "^6.26.0",
+    "chai": "^4.1.2",
+    "chalk": "^2.1.0",
+    "cheerio": "^1.0.0-rc.2",
+    "compression": "^1.7.0",
+    "cross-env": "^5.0.5",
+    "css-loader": "^0.28.7",
+    "eslint": "^4.7.2",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-watch": "^3.1.2",
+    "express": "^4.15.4",
+    "extract-text-webpack-plugin": "^3.0.0",
+    "jsdom": "^11.2.0",
+    "json-schema-faker": "^0.5.0-rc11",
+    "json-server": "^0.12.0",
+    "localtunnel": "^1.8.3",
+    "mocha": "^3.5.3",
+    "nock": "^9.0.20",
+    "npm-run-all": "^4.1.1",
+    "nsp": "^2.8.0",
+    "numeral": "^2.0.6",
+    "open": "^0.0.5",
+    "rimraf": "^2.6.2",
+    "style-loader": "^0.18.2",
+    "webpack": "^3.6.0",
+    "webpack-dev-middleware": "^1.12.0",
+    "webpack-hot-middleware": "^2.19.1",
+    "webpack-md5-hash": "^0.0.5"
+  }
+}
