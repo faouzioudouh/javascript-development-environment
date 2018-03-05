@@ -5,8 +5,10 @@
   "author": "Faouzi Oudouh",
   "license": "MIT",
   "scripts": {
-    "start": "npm-run-all --parallel security-check",
-    "security-check": "nsp check"
+    "prestart": "node buildScripts/startMessage",
+    "start": "npm-run-all --parallel security-check serve",
+    "security-check": "nsp check",
+    "serve": "node buildScripts/srcServer"
   },
   "dependencies": {
     "whatwg-fetch": "^2.0.3"

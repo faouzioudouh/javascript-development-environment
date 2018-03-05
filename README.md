@@ -15,10 +15,10 @@ Your Starter Kit should consist of the following elements:
 * [Editors and configuration](#1-editors-and-configuration)
 * [Package Management](#2-package-management)
 * [Development Web Server](#3-development-web-server)
-* [Automation](#4-Automation)
-* [Transpiling](#5-Transpiling)
-* [Bundling](#6-Bundling)
-* [Linting](#6-Linting)
+* [Automation](#4-automation)
+* [Transpiling](#5-transpiling)
+* [Bundling](#6-bundling)
+* [Linting](#6-linting)
 * [Testing and Continious Integration](#7-testing-and-continious-integration)
 * [HTTP Calls](#7-http-calls)
 * [Project structure](#8-project-structure)
@@ -191,3 +191,132 @@ Here are some ultra-low friction options for easily showing your customers your 
     1.  `npm i -g now`
     2.  Create a start script to open your web server such as Express.
     3.  Then anytime you want to deploy the app you just type `now`.
+
+# 4. Automation
+
+Automation is a necessity to assure that development builds and related tooling are integrated and utilized in a consistent manner.
+So there are a variety of options for automating your development, environment, and build process today. The three most popular options for JavaScript automation today are:
+
+* [Grunt](https://gruntjs.com/)
+
+  * Configuration over code
+  * Writes intermediary files between steps
+  * [Large plugin ecosystem](https://gruntjs.com/plugins)
+
+* [Gulp](https://gulpjs.com/)
+
+  * Focuses on in-memory streams which Gulp calls pipes
+  * You don't have to write on disk after each step in a task.
+  * Gulp typically Faster than Grunt!, beacuse it avoids writing to disk
+  * Code over configuration
+  * [Large plugin ecosystem](https://gulpjs.com/plugins/)
+
+* npm scripts
+
+  * Declared in package.json (No more files to maintain)
+  * Directely use npm packages (You don't have to import anything, just hit install)
+  * You can call separate Node scripts
+  * Convention-based pre/post hooks
+  * Leverage world's largest package manager.
+
+I **recommed** using **npm scripts** over Gulp and Grunt!
+Why?
+
+* Use tools directly
+* No need for separate plugins
+* Simpler debugging
+* Better docs
+* Easy to learn
+* Very Simple
+* Packages called from `npm scripts`do not need to be installed globally
+* [Read more](bit.ly/npmvsgulp)
+
+### 4.1 Let's write some demos, Demons.
+
+Now npm scripts allow you to make command line calls, utilize npm packages, or even call separate scripts that use Node, so they give us all the power that we need for creating a robust build process.
+
+1.  npm script that will start our development environment :
+
+In a previous module we created source server.js which configures express to serve up our index.html. Now let's create an npm script that will [start our development environment](package.json#L8).
+
+By convention this script should be called start, that way by convention we can just type **npm start** and it will run this command.
+
+#### `package.json`
+
+```js
+//...
+  "scripts": {
+    "start": "node buildScripts/srcServer",
+  }
+//...
+```
+
+2.  Pre/post Hooks :
+
+It would be nice if we received a helpful message when starting up our development environment. To do that lets create a file called start [startMessage.js](buildScripts/startMessage.js) here in build scripts.
+
+We want to print this message before our server starts up!
+
+#### `package.json`
+
+```js
+//...
+  "scripts": {
+    "prestart": "node buildScripts/startMessage",
+    "start": "node buildScripts/srcServer",
+  }
+//...
+```
+
+By convention the script `pre[SCRIPT_NAME]`will be called **before** the script `[SCRIPT_NAME]`.
+and also the script `post[SCRIPT_NAME]`will be called **after** the script `[SCRIPT_NAME]`.
+which means `prestart` will be called before the script `start`.
+
+3.  Security check npm script
+
+#### `package.json`
+
+```js
+//...
+  "scripts": {
+    "security-check": "nsp check"
+  }
+//...
+```
+
+3.  Localtunnel npm script
+
+it will just run local tunnel and open it on port 3000.
+
+#### `package.json`
+
+```js
+//...
+  "scripts": {
+    "share": "lt --port 3000"
+  }
+//...
+```
+
+### 4.2 Concurrent Tasks (Parllel tasks)
+
+The pre and post hooks are handy when you want to run something before or after a script, but you'll likely find that you also want to run multiple things at the same time.
+
+To do that, we'll use a package called [npm run all](https://www.npmjs.com/package/npm-run-all)
+
+Let's say that we'd like to run the security check each time we start the app at the same time we start up the web server.
+
+#### `package.json`
+
+```js
+//...
+  "scripts": {
+    "prestart": "node buildScripts/startMessage",
+    "start": "npm-run-all --parallel security-check serve",
+    "security-check": "nsp check",
+    "serve": "node buildScripts/srcServer",
+  }
+//...
+```
+
+5.  Transpiling
