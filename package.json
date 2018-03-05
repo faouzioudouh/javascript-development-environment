@@ -5,10 +5,13 @@
   "author": "Faouzi Oudouh",
   "license": "MIT",
   "scripts": {
-    "prestart": "node buildScripts/startMessage",
-    "start": "npm-run-all --parallel security-check serve",
+    "preestart:es6": "babel-node buildScripts/startMessage-es6",
+    "preestart:es5": "node buildScripts/startMessage-es5",
+    "start:es6": "npm-run-all --parallel security-check serve:es6",
+    "start:es5": "npm-run-all --parallel security-check serve:es5",
     "security-check": "nsp check",
-    "serve": "node buildScripts/srcServer"
+    "serve:es6": "babel-node buildScripts/srcServer-es6",
+    "serve:es5": "node buildScripts/srcServer-es5"
   },
   "dependencies": {
     "whatwg-fetch": "^2.0.3"

@@ -1,6 +1,6 @@
-var express = require("express");
-var path = require("path");
-var open = require("open");
+import express from "express";
+import path from "path";
+import open from "open";
 
 /* eslint-disable no-console */
 
@@ -11,12 +11,12 @@ const port = 3000;
 const app = express();
 
 // Tell Express which routes it should handle
-app.get("/", function(req, res) {
+app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../src/index.html"));
 });
 
 // We want Express to listen on the port we declared above, and add some error handling!
-app.listen(port, function(err) {
+app.listen(port, err => {
   if (err) {
     console.log(err);
   } else {

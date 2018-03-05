@@ -241,12 +241,14 @@ In a previous module we created source server.js which configures express to ser
 
 By convention this script should be called start, that way by convention we can just type **npm start** and it will run this command.
 
+**And since we are using `ES5`, we'll name our script `start:es5`, as we'll have the `ES6` later.**
+
 #### `package.json`
 
 ```js
 //...
   "scripts": {
-    "start": "node buildScripts/srcServer",
+    "start:es5": "node buildScripts/srcServer",
   }
 //...
 ```
@@ -262,15 +264,15 @@ We want to print this message before our server starts up!
 ```js
 //...
   "scripts": {
-    "prestart": "node buildScripts/startMessage",
-    "start": "node buildScripts/srcServer",
+    "prestart:es5": "node buildScripts/startMessage",
+    "start:es5": "node buildScripts/srcServer",
   }
 //...
 ```
 
 By convention the script `pre[SCRIPT_NAME]`will be called **before** the script `[SCRIPT_NAME]`.
 and also the script `post[SCRIPT_NAME]`will be called **after** the script `[SCRIPT_NAME]`.
-which means `prestart` will be called before the script `start`.
+which means `prestart:es5` will be called before the script `start:es5`.
 
 3.  Security check npm script
 
@@ -311,12 +313,86 @@ Let's say that we'd like to run the security check each time we start the app at
 ```js
 //...
   "scripts": {
-    "prestart": "node buildScripts/startMessage",
-    "start": "npm-run-all --parallel security-check serve",
+    "prestart:es5": "node buildScripts/startMessage",
+    "start:es5": "npm-run-all --parallel security-check serve:es5",
     "security-check": "nsp check",
-    "serve": "node buildScripts/srcServer",
+    "serve:es5": "node buildScripts/srcServer",
   }
 //...
 ```
 
-5.  Transpiling
+# 5. Transpiling
+
+People have complained about JavaScript for years. And justifiably so. It languished with no innovation for a full decade. It's a wonder it survived such stagnation. Yet, with the advent of ES6 in 2015, the language has finally grown up in a big way. And annual releases mean that we can look forward to more goodness every year. This is great, but it's also one of the many reasons transpiling has become so common.
+
+### 5.1 JavaScript Versions
+
+* ES1 _1997_
+* ES2 _1998_
+* ES3 _1999_
+* ES5 _2009_
+* ES6/ES2015 _2015_
+* ES7/ES2016 _2016_
+* ES8/ES2017 _2017_
+
+### 5.2 Transpilers
+
+[Babel](https://babeljs.io/) transpiles the latest version of JavaScript down to ES5 so that you can use all of these new features, but run them everywhere that ES5 is supported.
+
+[TypeScript](https://www.typescriptlang.org/) is a superset of JavaScript. So just as ES6 added features to JavaScript, TypeScript adds additional functionality to JavaScript.
+
+| [TypeScript](https://www.typescriptlang.org/) | [Babel](https://babeljs.io/)                |
+| --------------------------------------------- | ------------------------------------------- |
+| Enhanced Autocompletion                       | Write standard JS                           |
+| Enhanced readability                          | Leverage full JS Ecosystem                  |
+| additional non-standard features (Interfaces) | Use experimental features earlier           |
+| Safer refactoring                             | No type defs, annotations required          |
+| Clearer intent                                | ES6 imports are statically analyzable       |
+|                                               | Test, Lint, Bbael, Great libs, IDE = safety |
+
+### 5.3 Babel configuration
+
+Babel offers two methods for configuration. A [.babelrc](.babelrc) file and within package.json. The most common approach is to use a dedicated .babelrc configuration file.
+This configuration file should be placed in your project's root.
+It's also worth noting that Babel can transpile experimental features. You can view links to the different experimental JavaScript features under the Plugins page on Babel's website. As you can see,JavaScript features progress through different stages.
+
+| Stage   | what?                                                            |
+| ------- | ---------------------------------------------------------------- |
+| stage-0 | **Strawman**: Just an idea, possible Bbale plugin                |
+| stage-1 | **Proposal**: This is worth working on                           |
+| stage-2 | **Draft**: Initial spec                                          |
+| stage-3 | **Candidate**: complete spec and initial browser implementations |
+| stage-4 | **Finished** Will be added to the next yearly release            |
+
+### 5.4 Setup Babel
+
+All right, decision made. It's time to set up [Babel](https://babeljs.io/). Let's update our build process to transpile our code the moment that we hit Save. Since we've decided to use the latest version of JavaScript in our project we need to transpile down to ES5 to assure that it runs in environments that don't yet fully support the latest versions of JavaScript. To do that, we'll use [Babel](https://babeljs.io/).
+Let's create a new file in the root of our project called [.babelrc](.babelrc).
+
+#### `.babelrc`
+
+```js
+{
+  "presets": [
+    "latest"
+  ]
+}
+```
+
+And now since we have Babel we configured we can add `npm scripts` for ES6.
+Notice that for all the ES6 script we have to run the command with `babel-node`.
+
+#### `package.json`
+
+```js
+//...
+  "scripts": {
+    "preestart:es6": "babel-node buildScripts/startMessage-es6",
+    "preestart:es5": "node buildScripts/startMessage-es5",
+    "start:es6": "npm-run-all --parallel security-check serve:es6",
+    "start:es5": "npm-run-all --parallel security-check serve:es5",
+    "security-check": "nsp check",
+    "serve:es6": "babel-node buildScripts/srcServer",
+    "serve:es5": "node buildScripts/srcServer"  }
+//...
+```
