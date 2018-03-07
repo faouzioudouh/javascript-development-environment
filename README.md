@@ -7,7 +7,7 @@ JavaScript Development Environment
 why do you need a starter kit?
 
 * Automated checklist
-* Right thing become automoatic
+* Right thing become automatic
 * Rapid feedback
 
 Your Starter Kit should consist of the following elements:
@@ -61,7 +61,7 @@ PS: Some of the listed editors above require [plugin](https://marketplace.visual
 
 # 2. Package Management
 
-We wil ultimately go with NPM, but its not the only package manager we have in the wide javaScript land, have a variety of package managers to choose from.
+We wil ultimately go with NPM, but it's not the only package manager we have in the wide javaScript land, have a variety of package managers to choose from.
 
 ### Package Managers
 
@@ -76,8 +76,8 @@ Next you have to install [Node](https://nodejs.org) & [npm](npmjs.com) and also 
 
 ### Package Security
 
-Packages can be published on npm by anyone, so that might make you a little bit paraniod!
-[Node security platform](https://nodesecurity.io/) offers a simply command line interface that you can automate checking for security vulnerabilities automatically. All you do is call nsp check as part of your build and then it reports the number of vulnerabilities found if any.
+Packages can be published on npm by anyone, so that might make you a little bit paranoid!
+[Node security platform](https://nodesecurity.io/) offers a simple command line interface that you can automate checking for security vulnerabilities automatically. All you do is call nsp check as part of your build and then it reports the number of vulnerabilities found if any.
 
 how to install & run:
 
@@ -87,14 +87,14 @@ how to install & run:
 
 `nsp check`
 
-You might want to consider adding `nsp check` in your start script whithin your [package.json](package.json)
+You might want to consider adding `nsp check` in your start script within your [package.json](package.json)
 
 # 3. Development Web Server
 
 ### Development Webserver Options
 
 Here are six interesting web servers to consider for JavaScript development.
-Let's discuss the merits of each. The absolute simplest way I've found to get this done is an MPM package called [http-server](https://www.npmjs.com/package/http-server)
+Let's discuss the merits of each. The absolute simplest way I've found to get this done is an NPM package called [http-server](https://www.npmjs.com/package/http-server)
 
 * [http-server](https://www.npmjs.com/package/http-server)
 
